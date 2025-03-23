@@ -1,0 +1,20 @@
+meta {
+  name: Create Bid As Tom for 200
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{bidSvc}}/api/bids?auctionId={{createdItemId}}&amount=200
+  body: none
+  auth: bearer
+}
+
+params:query {
+  auctionId: {{createdItemId}}
+  amount: 200
+}
+
+auth:bearer {
+  token: {{TomToken}}
+}

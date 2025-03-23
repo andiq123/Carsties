@@ -1,0 +1,25 @@
+meta {
+  name: Get all items
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{gateway}}/search
+  body: none
+  auth: none
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Result includes results, pagecount and totalcount properties', function() {
+      expect(jsonData).to.haveOwnProperty('results');
+      expect(jsonData).to.haveOwnProperty('pageCount');
+      expect(jsonData).to.haveOwnProperty('totalCount');
+  })
+}

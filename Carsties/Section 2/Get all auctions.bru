@@ -1,0 +1,28 @@
+meta {
+  name: Get all auctions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{auctionApi}}/api/auctions
+  body: none
+  auth: none
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Should be 10 items', function() {
+      expect(jsonData.length).to.equal(10);
+  })
+  
+  test('First item should be Audi R8', function() {
+      expect(jsonData[0].make).to.eq('Audi');
+      expect(jsonData[0].model).to.eq('R8');
+  })
+}

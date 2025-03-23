@@ -1,0 +1,28 @@
+meta {
+  name: Get Item by Id
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{gateway}}/auctions/{{createdItemId}}
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  setTimeout(function(){}, 1000);
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Item has correct make and model', function() {
+      expect(jsonData.make).to.eq('Ford');
+      expect(jsonData.model).to.eq('Escort');
+  })
+}

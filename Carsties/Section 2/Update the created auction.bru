@@ -1,0 +1,23 @@
+meta {
+  name: Update the created auction
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{auctionApi}}/api/auctions/{{createdItemId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "make": "Ford Updated"
+  }
+}
+
+tests {
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+}

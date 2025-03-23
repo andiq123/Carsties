@@ -1,0 +1,31 @@
+meta {
+  name: Get Item updated from search svc
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{searchApi}}/api/search?searchTerm={{createdItemModel}}Updated
+  body: none
+  auth: none
+}
+
+params:query {
+  searchTerm: {{createdItemModel}}Updated
+}
+
+script:pre-request {
+  setTimeout(function(){}, 1000);
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Item has updated model', function() {
+      expect(jsonData.results[0].model).to.contain('Updated');
+  })
+}

@@ -1,0 +1,26 @@
+meta {
+  name: GetTomToken
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:5000/connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: password
+  username: tom
+  password: Pass123$
+  client_id: postman
+  client_secret: NotASecret
+  scope: auctionApp openid profile
+}
+
+tests {
+  var response = res.getBody();
+  
+  bru.setVar("TomToken", response.access_token);
+}

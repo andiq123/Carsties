@@ -1,0 +1,11 @@
+meta {
+  name: Get bids for auction
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{bidSvc}}/api/bids/{{createdItemId}}
+  body: none
+  auth: none
+}

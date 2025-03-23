@@ -1,0 +1,32 @@
+meta {
+  name: Get Item created from search svc
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{gateway}}/search?searchTerm={{createdItemModel}}
+  body: none
+  auth: none
+}
+
+params:query {
+  searchTerm: {{createdItemModel}}
+}
+
+script:pre-request {
+  setTimeout(function(){}, 1000);
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Item has been created in search', function() {
+      var id = bru.getVar('createdItemId');
+      expect(jsonData.results[0].id).to.eq(id);
+  })
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Get Updated Auction
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{auctionApi}}/api/auctions/{{createdItemId}}
+  body: none
+  auth: none
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Make includes updated', function() {
+      expect(jsonData.make).to.include('Updated');
+  })
+}

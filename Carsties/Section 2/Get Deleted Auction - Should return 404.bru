@@ -1,0 +1,17 @@
+meta {
+  name: Get Deleted Auction - Should return 404
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{auctionApi}}/api/auctions/{{createdItemId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test('Status code is 404', function() {
+      expect(res.getStatus()).to.equal(404);
+  })
+}

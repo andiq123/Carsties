@@ -1,0 +1,21 @@
+meta {
+  name: Get Deleted Item return 404
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{gateway}}/auctions/{{createdItemId}}
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  setTimeout(function(){}, 1000);
+}
+
+tests {
+  test('Status code is 404', function() {
+      expect(res.getStatus()).to.equal(404);
+  });
+}

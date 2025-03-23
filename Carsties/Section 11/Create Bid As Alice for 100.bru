@@ -1,0 +1,20 @@
+meta {
+  name: Create Bid As Alice for 100
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{bidSvc}}/api/bids?auctionId={{createdItemId}}&amount=100
+  body: none
+  auth: bearer
+}
+
+params:query {
+  auctionId: {{createdItemId}}
+  amount: 100
+}
+
+auth:bearer {
+  token: {{AliceToken}}
+}

@@ -1,0 +1,31 @@
+meta {
+  name: Update the created auction Copy
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{gateway}}/auctions/{{createdItemId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{BobToken}}
+}
+
+body:json {
+  {
+      "make": "Ford",
+      "model": "{{createdItemModel}}Updated",
+      "color": "red",
+      "mileage": 20000,
+      "year": 1999
+  }
+}
+
+tests {
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+}

@@ -1,0 +1,24 @@
+meta {
+  name: Get Ferrari Spider
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{auctionApi}}/api/auctions/dc1e4071-d19d-459b-b848-b5c3cd3d151f
+  body: none
+  auth: none
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Item is Ferrari Spider', function() {
+      expect(jsonData.make).to.eq('Ferrari');
+      expect(jsonData.model).to.eq('Spider');
+  })
+}

@@ -1,0 +1,11 @@
+meta {
+  name: Get Created Auction details
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{gateway}}/auctions/{{createdItemId}}
+  body: none
+  auth: none
+}

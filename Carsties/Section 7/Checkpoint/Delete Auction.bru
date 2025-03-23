@@ -1,0 +1,21 @@
+meta {
+  name: Delete Auction
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{gateway}}/auctions/{{createdItemId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{BobToken}}
+}
+
+tests {
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+}

@@ -1,0 +1,51 @@
+meta {
+  name: Create 10 second Auction as Bob
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{gateway}}/auctions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{BobToken}}
+}
+
+body:json {
+  {
+    "make": "Ford",
+    "model": "{{$randomFirstName}}",
+    "color": "White",
+    "year": "2021",
+    "mileage": "10000",
+    "imageUrl": "https://cdn.pixabay.com/photo/2018/02/04/15/45/car-3130111_960_720.jpg",
+    "reservePrice": 10,
+    "auctionEnd": "{{dateString}}"
+  }
+}
+
+script:pre-request {
+  var date = new Date(new Date().getTime() + 20000);
+  var dateString = date.toISOString();
+  bru.setVar("dateString", dateString);
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test("Status code is 201", function () {
+      expect(res.getStatus()).to.equal(201);
+  });
+  
+  test("Response body contains Alice as seller", function () {
+      expect(jsonData).to.haveOwnProperty('seller');
+      expect(jsonData.seller).to.eq('bob');
+  });
+  
+  bru.setVar("createdItemId", jsonData.id);
+  bru.setVar("createdItemMileage", jsonData.mileage);
+  bru.setVar("createdItemModel", jsonData.model);
+}

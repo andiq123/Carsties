@@ -1,0 +1,16 @@
+meta {
+  name: Get Created Auction search
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{gateway}}/search?pageSize=100&searchTerm={{createdItemModel}}
+  body: none
+  auth: none
+}
+
+params:query {
+  pageSize: 100
+  searchTerm: {{createdItemModel}}
+}

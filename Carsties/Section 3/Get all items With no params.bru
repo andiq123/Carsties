@@ -1,0 +1,30 @@
+meta {
+  name: Get all items With no params
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{searchApi}}/api/search
+  body: none
+  auth: none
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Result includes results, pagecount and totalcount properties', function() {
+      expect(jsonData).to.haveOwnProperty('results');
+      expect(jsonData).to.haveOwnProperty('pageCount');
+      expect(jsonData).to.haveOwnProperty('totalCount');
+  })
+  
+  test('pagecount is 3 and totalCount is 9', function() {
+      expect(jsonData.pageCount).to.eq(3);
+      expect(jsonData.totalCount).to.eq(9);
+  })
+}

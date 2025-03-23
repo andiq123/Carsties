@@ -1,0 +1,62 @@
+meta {
+  name: Create new Auction
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{gateway}}/auctions
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{BobToken}}
+}
+
+body:json {
+  {
+    "make": "Ford",
+    "model": "{{$randomFirstName}}",
+    "color": "{{$randomColor}}",
+    "year": "2020",
+    "mileage": "{{$randomInt}}",
+    "imageUrl": "https://cdn.pixabay.com/photo/2018/02/04/15/45/car-3130111_960_720.jpg",
+    "reservePrice": {{$randomInt}},
+    "auctionEnd": "{{dateString}}"
+  }
+}
+
+script:pre-request {
+  var date = new Date()
+  date.setDate(date.getDate() + 14);
+  var dateString = date.toISOString();
+  bru.setVar("dateString", dateString);
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test("Status code is 201", function () {
+      expect(res.getStatus()).to.equal(201);
+  });
+  
+  test("Response body contains expected properties", function () {
+      expect(jsonData).to.haveOwnProperty('id');
+      expect(jsonData).to.haveOwnProperty('make');
+      expect(jsonData).to.haveOwnProperty('model');
+      expect(jsonData).to.haveOwnProperty('year');
+      expect(jsonData).to.haveOwnProperty('imageUrl');
+      expect(jsonData).to.haveOwnProperty('seller');
+      expect(jsonData.status).to.eq('Live');
+  });
+  
+  test("Response body contains Bob as seller", function () {
+      expect(jsonData).to.haveOwnProperty('seller');
+      expect(jsonData.seller).to.eq('bob');
+  });
+  
+  bru.setVar("createdItemId", jsonData.id);
+  bru.setVar("createdItemMileage", jsonData.mileage);
+  bru.setVar("createdItemModel", jsonData.model);
+}

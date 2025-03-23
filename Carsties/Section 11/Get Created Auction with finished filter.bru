@@ -1,0 +1,17 @@
+meta {
+  name: Get Created Auction with finished filter
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{gateway}}/search?pageSize=100&searchTerm={{createdItemModel}}&filterBy=finished
+  body: none
+  auth: none
+}
+
+params:query {
+  pageSize: 100
+  searchTerm: {{createdItemModel}}
+  filterBy: finished
+}

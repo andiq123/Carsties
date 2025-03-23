@@ -1,0 +1,31 @@
+meta {
+  name: Get Item created - should return 0 results
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{searchApi}}/api/search?searchTerm={{createdItemModel}}
+  body: none
+  auth: none
+}
+
+params:query {
+  searchTerm: {{createdItemModel}}
+}
+
+script:pre-request {
+  setTimeout(function(){}, 1000);
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('Item has been removed from searhc', function() {
+      expect(jsonData.totalCount).to.eq(0);
+  })
+}

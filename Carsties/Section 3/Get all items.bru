@@ -1,0 +1,29 @@
+meta {
+  name: Get all items
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{searchApi}}/api/search
+  body: none
+  auth: none
+}
+
+tests {
+  var jsonData = res.getBody();
+  
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+  
+  test('First item is Audi', function() {
+      expect(jsonData.results[0].make).to.eq('Audi');
+  })
+  
+  test('Result includes results, pagecount and totalcount properties', function() {
+      expect(jsonData).to.haveOwnProperty('results');
+      expect(jsonData).to.haveOwnProperty('pageCount');
+      expect(jsonData).to.haveOwnProperty('totalCount');
+  })
+}

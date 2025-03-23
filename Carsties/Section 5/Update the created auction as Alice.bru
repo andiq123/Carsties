@@ -1,0 +1,31 @@
+meta {
+  name: Update the created auction as Alice
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{auctionApi}}/api/auctions/{{createdItemId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AliceToken}}
+}
+
+body:json {
+  {
+      "make": "Ford Updated",
+      "model": "Updated",
+      "color": "red",
+      "mileage": 20000,
+      "year": 1999
+  }
+}
+
+tests {
+  test('Status code is 200', function() {
+      expect(res.getStatus()).to.equal(200);
+  })
+}

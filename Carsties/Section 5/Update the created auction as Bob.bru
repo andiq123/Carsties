@@ -1,0 +1,31 @@
+meta {
+  name: Update the created auction as Bob
+  type: http
+  seq: 7
+}
+
+put {
+  url: {{auctionApi}}/api/auctions/{{createdItemId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{BobToken}}
+}
+
+body:json {
+  {
+      "make": "Ford Updated",
+      "model": "Updated",
+      "color": "red",
+      "mileage": 20000,
+      "year": 1999
+  }
+}
+
+tests {
+  test('Status code is 403', function() {
+      expect(res.getStatus()).to.equal(403);
+  })
+}

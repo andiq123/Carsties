@@ -1,0 +1,26 @@
+meta {
+  name: GetAliceToken
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{identitySvc}}/connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: password
+  username: alice
+  password: Pass123$
+  client_id: postman
+  client_secret: NotASecret
+  scope: auctionApp openid profile
+}
+
+tests {
+  var response = res.getBody();
+  
+  bru.setVar("AliceToken", response.access_token);
+}
